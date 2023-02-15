@@ -1,0 +1,53 @@
+<form [formGroup]="usersForms" (ngSubmit)="saveUser()">
+  <mat-card>
+    <mat-card-content>
+
+      <mat-form-field appearance="fill" class="">
+        <mat-label>Id</mat-label>
+        <input matInput placeholder="ID" formControlName="id">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="">
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="Email" formControlName="email">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="">
+        <mat-label>Prénoms</mat-label>
+        <input matInput placeholder="Prénoms" formControlName="firstName">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="">
+        <mat-label>Nom</mat-label>
+        <input matInput placeholder="Nom" formControlName="lastName">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="">
+        <mat-label>Télephone</mat-label>
+        <input matInput placeholder="Télephone" formControlName="phoneNumber">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="">
+        <mat-label>Sex</mat-label>
+        <mat-select formControlName="sex">
+          <mat-option value="MALE">HOMME</mat-option>
+          <mat-option value="FEMALE">FEMME</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Channels</mat-label>
+        <mat-select formControlName="channelId">
+          <mat-option *ngFor="let channelList of channelLists"
+                      [value]="channelList.id">{{channelList.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-card-content>
+    <mat-card-footer>
+      <div class="example-button-row">
+        <button mat-raised-button color="primary">Save</button>
+        | <a mat-raised-button color="accent" (click)="closePopup()">Close</a>
+      </div>
+    </mat-card-footer>
+  </mat-card>
+</form>
