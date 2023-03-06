@@ -56,7 +56,7 @@ export class UsersComponent implements OnInit {
   }
 
   deleteUser(id: any) {
-    alertify.confirm("Remove Users:", "Do you want to remove this company?", () => {
+    alertify.confirm("Remove Users:", "Do you want to remove this user?", () => {
       this.userService.deleteUsersById(id).subscribe(response => {
         this.loadUsers()
       })

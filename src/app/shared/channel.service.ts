@@ -8,7 +8,7 @@ import {BaseModel} from "../Models/BaseModel";
 })
 export class ChannelService {
 
-  baseApiUrl =  "http://localhost:9000/api/channel/"
+  baseApiUrl =  "http://18.220.215.21:3000/api/channel/"
   constructor(private http:HttpClient) { }
 
   getChannels():Observable<BaseModel>{

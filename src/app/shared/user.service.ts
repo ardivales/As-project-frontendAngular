@@ -10,7 +10,8 @@ export class UserService {
 
   constructor(private http:HttpClient) { }
 
-  baseApiUrl =  "http://localhost:9000/api/user/"
+  baseApiUrl =  "http://18.220.215.21:3000/api/user/"
+  baseApiUrl_local =  "http://localhost:3000/api/user/"
 
   getUsers():Observable<BaseModel>{
     return this.http.get<BaseModel>(this.baseApiUrl)
@@ -24,11 +25,11 @@ export class UserService {
     return this.http.delete<BaseModel>(this.baseApiUrl+id)
   }
 
-  createUser(userData:any){
-    return this.http.post(this.baseApiUrl, userData)
+  createUser(userData:any):Observable<BaseModel>{
+    return this.http.post<BaseModel>(this.baseApiUrl_local, userData)
   }
 
-  updateUser(id:any, userData:any){
-    return this.http.put(this.baseApiUrl+id, userData)
+  updateUser(id:any, userData:any):Observable<BaseModel>{
+    return this.http.put<BaseModel>(this.baseApiUrl+id, userData)
   }
 }

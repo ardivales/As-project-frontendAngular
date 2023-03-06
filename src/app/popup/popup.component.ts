@@ -5,6 +5,8 @@ import {UserService} from "../shared/user.service";
 import {ChannelService} from "../shared/channel.service";
 import {ChannelModel} from "../Models/channelModel";
 import * as alertify from "alertifyjs"
+import {UsersModel} from "../Models/usersModel";
+import {BaseModel} from "../Models/BaseModel";
 
 @Component({
   selector: 'app-popup',
@@ -19,10 +21,10 @@ export class PopupComponent implements OnInit {
   updateData: any
 
   ngOnInit() {
-    this.getAll()
+    this.getAll() //Get channel List and use in the html component
     if (this.data.id != '' && this.data.id != null) {
       this.userApi.getUsersById(this.data.id).subscribe(response => {
-        this.updateData = <ChannelModel>response.data
+        this.updateData = <UsersModel>response.data
         this.usersForms.setValue({
           id: this.updateData.id,
           firstName: this.updateData.firstName,
@@ -36,6 +38,7 @@ export class PopupComponent implements OnInit {
     }
   }
 
+  //Genere le formulaire
   usersForms = this.builder.group({
     id: this.builder.control({value: '', disabled: true}),
     email: this.builder.control('', Validators.email),
@@ -46,29 +49,40 @@ export class PopupComponent implements OnInit {
     channelId: this.builder.control('', Validators.required),
   })
 
+  //gere le save et le update du formualaire
   saveUser() {
     if (this.usersForms.valid) {
       const userId = this.usersForms.getRawValue().id
       if (userId != '' && userId != null) {
         this.userApi.updateUser(userId, this.usersForms.getRawValue()).subscribe(response => {
           this.dialog.closeAll()
-          alertify.success("Updated Succesfully")
+          if (response.status == "success") {
+            alertify.success(response.message)
+          } else {
+            alertify.error(response.message + ':' + response.error_description)
+          }
         })
       } else {
         this.userApi.createUser(this.usersForms.value).subscribe(response => {
           this.dialog.closeAll()
-          alertify.success("Saved Succesfully")
+          if (response.status == "success") {
+            alertify.success(response.message)
+          } else {
+            alertify.error(response.message + ':' + response.error_description)
+          }
         })
       }
     }
   }
 
+  //recuprer la liste des channel
   getAll() {
     this.channelService.getChannels().subscribe(result => {
       return this.channelLists = <ChannelModel>result.data
     })
   }
 
+  //fonction de fermeture
   closePopup() {
     this.dialog.closeAll()
   }

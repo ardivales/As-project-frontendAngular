@@ -1,4 +1,6 @@
 export interface BaseModel{
   message: string,
-  data:any
+  data:any,
+  status:String,
+  error_description : any
 }
